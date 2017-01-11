@@ -68,6 +68,7 @@ string maxScore(string rack)
 		}
 
 	}
+	reader.close();
 	return highScore;
 }
 
@@ -110,9 +111,16 @@ bool canMake(string rack, string phrase)
 		if (!flag)
 		{
 			for (int z = 0; z < rack.size(); z++)
+			{
 				if (rack[z] == '?')
+				{
+					flag = true;
+					rack[z] = 0;
 					break;
-			return false;
+				}
+			}
+			if (!flag)
+				return false;
 		}
 		flag = false;
 	}
@@ -121,8 +129,14 @@ bool canMake(string rack, string phrase)
 
 string canMake(string rack)
 {
-
-
-
-	return "blank for now";
+	string temp, longest;
+	reader.open("enable1.txt");
+	while (getline(reader, temp))
+	{
+		if (canMake(rack, temp))
+			if (temp.size()> longest.size())
+				longest = temp;
+	}
+	reader.close();
+	return longest;
 }
